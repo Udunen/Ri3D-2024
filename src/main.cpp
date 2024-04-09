@@ -20,17 +20,17 @@ using namespace vex;
 
 competition  Competition;
 
-motor leftFrontDriveMotor = motor(PORT16, ratio18_1, false);
-motor leftBackDriveMotor = motor(PORT11, ratio18_1, false);
-motor rightFrontDriveMotor = motor(PORT6, ratio18_1, false);
-motor rightBackDriveMotor = motor(PORT12, ratio18_1, false);
-motor frontDriveMotor = motor(PORT3, ratio18_1, true);
-motor backDriveMotor = motor(PORT4, ratio18_1, false);
-inertial inertialSens = inertial(PORT21);
-motor arm = motor(PORT7, ratio36_1, false);
-motor deploy = motor(PORT8, ratio18_1, false);
-motor climbMotorA = motor(PORT9, ratio18_1, false);
-motor climbMotorB = motor(PORT10, ratio36_1, true);
+motor leftFrontDriveMotor = motor(PORT17, ratio18_1, false);
+motor leftBackDriveMotor = motor(PORT19, ratio18_1, false);
+motor rightFrontDriveMotor = motor(PORT7, ratio18_1, false);
+motor rightBackDriveMotor = motor(PORT8, ratio18_1, false);
+motor frontDriveMotor = motor(PORT9, ratio18_1, true);
+motor backDriveMotor = motor(PORT20, ratio18_1, false);
+inertial inertialSens = inertial(PORT4);
+motor arm = motor(PORT1, ratio36_1, false);
+motor deploy = motor(PORT2, ratio18_1, false);
+motor climbMotorA = motor(PORT6, ratio18_1, false);
+motor climbMotorB = motor(PORT16, ratio36_1, true);
 motor_group climb = motor_group(climbMotorA, climbMotorB);
 motor_group leftDrive = motor_group(leftFrontDriveMotor, leftBackDriveMotor);
 motor_group rightDrive = motor_group(rightFrontDriveMotor, rightBackDriveMotor);
