@@ -2,8 +2,9 @@
 #include <cmath>
 
 
+
 /* 
-  this class was made by Cole Huffine class of 2024
+  this class was made by Cole Huffine, class of 2024
   lets hope rivera gives this to future classes bc
   i think it would be useful for everyone
 */
@@ -14,21 +15,16 @@
 
   Usage:
     If you need to get the value of a joystick fixed to account for the physical limitations
-      getLeftX();
-      getLeftY();
-      getRightX();
-      getRightY();
+      getLeftX(con, deadband);
+      getLeftY(con, deadband);
+      getRightX(con, deadband);
+      getRightY(con, deadband);
 
     If you need to get the REAL value of a joystick, as inputted into the brain
-      getTrueLeftX();
-      getTrueLeftY();
-      getTrueRightX();
-      getTrueRightY();
-*/
-
-/*
-  If you want to use a second controller, or name your controller something else other than Controller1,
-  then go to all of the getTrue methods, and change the name to what you have as your config
+      getTrueLeftX(con, deadband);
+      getTrueLeftY(con, deadband);
+      getTrueRightX(con, deadband);
+      getTrueRightY(con, deadband);
 */
 
 
@@ -39,22 +35,37 @@ int signum(double val) {
   return (val >= 0) ? 1 : -1;
 }
 
-
 //use these if you need to get the true value of any joystick
-double getTrueLeftX() {
-  return Controller1.Axis4.position(pct);
+double getTrueLeftX(vex::controller con, int deadband) {
+  if (abs(con.Axis4.position(pct)) > deadband) {
+    return con.Axis4.position(pct);
+  } else {
+    return 0;
+  }
 }
 
-double getTrueLeftY() {
-  return Controller1.Axis3.position(pct);
+double getTrueLeftY(vex::controller con, int deadband) {
+  if (abs(con.Axis3.position(pct)) > deadband) {
+    return con.Axis3.position(pct);
+  } else {
+    return 0;
+  }
 }
 
-double getTrueRightX() {
-  return Controller1.Axis1.position(pct);
+double getTrueRightX(vex::controller con, int deadband) {
+  if (abs(con.Axis1.position(pct)) > deadband) {
+    return con.Axis1.position(pct);
+  } else {
+    return 0;
+  }
 }
 
-double getTrueRightY() {
-  return Controller1.Axis2.position(pct);
+double getTrueRightY(vex::controller con, int deadband) {
+ if (abs(con.Axis2.position(pct)) > deadband) {
+    return con.Axis2.position(pct);
+  } else {
+    return 0;
+  }
 }
 
 /*
@@ -63,10 +74,10 @@ double getTrueRightY() {
   * forces the joystick into a circle, its impossible to reach the the corner of the box.
   * This method fixes that issue.
 */  
-double joystickFix(bool isLeft, bool isX) {
+double joystickFix(bool isLeft, bool isX, vex::controller con) {
   double root2 = sqrt(2);
-  double x = isLeft ? getTrueLeftX() : getTrueRightX();
-  double y = isLeft ? getTrueLeftY() : getTrueRightY();
+  double x = isLeft ? getTrueLeftX(con, 0) : getTrueRightX(con, 0);
+  double y = isLeft ? getTrueLeftY(con, 0) : getTrueRightY(con, 0);
   double magnitude = sqrt(x*x + y*y);
   double values[2] = {
     signum(x) * fmin(fabs(x*root2), magnitude),
@@ -77,20 +88,37 @@ double joystickFix(bool isLeft, bool isX) {
 
 
 // these return the fixed value of all of the joysticks
-double getLeftX() {
-  return joystickFix(true, true);
+double getLeftX(vex::controller con, int deadband) {
+  if(fabs(joystickFix(true, true, con)) > deadband){
+    return joystickFix(true, true, con);
+  } else {
+    return 0;
+  }
 }
 
-double getLeftY() {
-  return joystickFix(true, false);
+double getLeftY(vex::controller con, int deadband) {
+  if(fabs(joystickFix(true, false, con)) > deadband){
+    return joystickFix(true, false, con);
+  } else {
+    return 0;
+  }
 }
 
-double getRightX() {
-  return joystickFix(false, true);
+double getRightX(vex::controller con, int deadband) {
+  if(fabs(joystickFix(false, true, con)) > deadband){
+    return joystickFix(false, true, con);
+  } else {
+    return 0;
+  }
 }
 
-double getRightY() {
-  return joystickFix(false, false);
+double getRightY(vex::controller con, int deadband) {
+  if(fabs(joystickFix(false, false, con)) > deadband){
+    return joystickFix(false, false, con);
+  } else {
+    return 0;
+  }
 }
+
 
 
