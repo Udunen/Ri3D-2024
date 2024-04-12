@@ -74,14 +74,7 @@ class Drives {
 };
 
 void usercontrol(void) {
-  inertialSens.setHeading(0.0, degrees);
-  inertialSens.setRotation(0.0, degrees);
-  inertialSens.startCalibration();
-  while(inertialSens.isCalibrating()) {
-    task::sleep(10);
-  }
-  inertialSens.setHeading(0.0, degrees);
-  inertialSens.setRotation(0.0, degrees);
+  
   while(true) {
     Drives::fieldOriented();
     //zeroes inertial sensor
@@ -124,9 +117,30 @@ void usercontrol(void) {
 
 
 void auton(void) {
+  //Defensive side code below Save to slot 2
+  //Drives::robotOriented(0.0,0.0,-25);
+  //task::sleep(1500);
+  //Drives::robotOriented(0.0, 50, 0);
+ // task::sleep(2000);
+  //Drives::robotOriented(0.0, 0.0, 0);
+  //Drives::robotOriented(0.0, -50, 0.0);
+ // task::sleep(1000);
+ // Drives::robotOriented(0.0, 0.0,-25);
+ // task::sleep(1200);
+//  Drives::robotOriented(0.0, 0.0, 0);
+//Offensive side code below save to slot 3
+  Drives::robotOriented(0.0,0.0,-15);
+  task::sleep(1200);
   Drives::robotOriented(0.0, 50, 0);
-  task::sleep(4000);
+  task::sleep(2000);
   Drives::robotOriented(0.0, 0.0, 0);
+  Drives::robotOriented(0.0, -50, 0.0);
+  task::sleep(1000);
+  climb.spin(reverse);
+  Drives::robotOriented(0.0, 0.0, 0);
+  task::sleep(1000);
+  climb.stop();
+  
 }
 
 int main() {
@@ -140,6 +154,16 @@ int main() {
 
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+
+  inertialSens.setHeading(0.0, degrees);
+  inertialSens.setRotation(0.0, degrees);
+  inertialSens.startCalibration();
+  while(inertialSens.isCalibrating()) {
+    task::sleep(10);
+  }
+  inertialSens.setHeading(0.0, degrees);
+  inertialSens.setRotation(0.0, degrees);
+
   Competition.autonomous(auton);
   Competition.drivercontrol(usercontrol);
    
