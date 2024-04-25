@@ -27,10 +27,9 @@ motor rightBackDriveMotor = motor(PORT8, ratio18_1, false);
 motor frontDriveMotor = motor(PORT9, ratio18_1, true);
 motor backDriveMotor = motor(PORT20, ratio18_1, false);
 inertial inertialSens = inertial(PORT4);
-motor arm = motor(PORT1, ratio36_1, false);
 motor deploy = motor(PORT2, ratio18_1, false);
-motor climbMotorA = motor(PORT6, ratio36_1, false);
-motor climbMotorB = motor(PORT16, ratio36_1, true);
+motor climbMotorA = motor(PORT6, ratio18_1, false);
+motor climbMotorB = motor(PORT16, ratio18_1, true);
 motor_group climb = motor_group(climbMotorA, climbMotorB);
 motor_group leftDrive = motor_group(leftFrontDriveMotor, leftBackDriveMotor);
 motor_group rightDrive = motor_group(rightFrontDriveMotor, rightBackDriveMotor);
@@ -117,29 +116,30 @@ void usercontrol(void) {
 
 
 void auton(void) {
-  //Defensive side code below Save to slot 2
-  //Drives::robotOriented(0.0,0.0,-25);
-  //task::sleep(1500);
-  //Drives::robotOriented(0.0, 50, 0);
- // task::sleep(2000);
-  //Drives::robotOriented(0.0, 0.0, 0);
-  //Drives::robotOriented(0.0, -50, 0.0);
- // task::sleep(1000);
- // Drives::robotOriented(0.0, 0.0,-25);
- // task::sleep(1200);
-//  Drives::robotOriented(0.0, 0.0, 0);
-//Offensive side code below save to slot 3
-  Drives::robotOriented(0.0,0.0,-15);
-  task::sleep(1200);
+  // Defensive side code below Save to slot 2
+  Drives::robotOriented(0.0, 0.0, -25);
+  task::sleep(1500);
   Drives::robotOriented(0.0, 50, 0);
   task::sleep(2000);
   Drives::robotOriented(0.0, 0.0, 0);
   Drives::robotOriented(0.0, -50, 0.0);
   task::sleep(1000);
-  climb.spin(reverse);
+  Drives::robotOriented(0.0, 0.0, -25);
+  task::sleep(1200);
   Drives::robotOriented(0.0, 0.0, 0);
-  task::sleep(1000);
-  climb.stop();
+
+//Offensive side code below save to slot 3
+  // Drives::robotOriented(0.0,0.0,-15);
+  // task::sleep(1200);
+  // Drives::robotOriented(0.0, 50, 0);
+  // task::sleep(2000);
+  // Drives::robotOriented(0.0, 0.0, 0);
+  // Drives::robotOriented(0.0, -50, 0.0);
+  // task::sleep(1000);
+  // climb.spin(reverse);
+  // Drives::robotOriented(0.0, 0.0, 0);
+  // task::sleep(1000);
+  // climb.stop();
   
 }
 
